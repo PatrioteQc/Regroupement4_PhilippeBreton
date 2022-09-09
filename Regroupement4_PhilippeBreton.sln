@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Regroupement4_PhilippeBreton", "Regroupement4_PhilippeBreton.vbproj", "{EF67A36D-2AC3-4711-A842-0BF263B66B2C}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Regroupement4_PhilippeBreton", "Regroupement4_PhilippeBreton.vbproj", "{EF67A36D-2AC3-4711-A842-0BF263B66B2C}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestUnitaire", "..\TestUnitaire\TestUnitaire.vbproj", "{B56380B3-969E-4D5C-9382-206BC135CA47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EF67A36D-2AC3-4711-A842-0BF263B66B2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF67A36D-2AC3-4711-A842-0BF263B66B2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF67A36D-2AC3-4711-A842-0BF263B66B2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B56380B3-969E-4D5C-9382-206BC135CA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B56380B3-969E-4D5C-9382-206BC135CA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B56380B3-969E-4D5C-9382-206BC135CA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B56380B3-969E-4D5C-9382-206BC135CA47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

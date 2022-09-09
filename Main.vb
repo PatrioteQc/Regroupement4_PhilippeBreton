@@ -1,14 +1,10 @@
 ﻿Public Class Main
-    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        Dim login As New Login
-        login.Show()
-        Me.Hide()
 
-    End Sub
-
+    'Au chargement de la fenêtre principale du programme, on rafraichit la liste des clients et la liste des films affichés.
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles Me.Load
         RafraichirListeClient()
         RafraichirListeFilms()
+        'Si le niveau d'accès de l'utilisateur permet la modification, les boutons permettant d'éditer les données sont affichés. Si l'utilisateur est en lecture seule, ces boutons sont masqués.
         If niveauAccesComplet Then
             btnCreer.Visible = True
             btnModifier.Visible = True
@@ -20,6 +16,7 @@
         End If
     End Sub
 
+    'Cette procédure permet de créer les colonnes requises dans le DataGridView de clients et de le remplir avec les données provenant des tables clients et personnes.
     Public Sub RafraichirListeClient()
         Dim dtListeClient As New DataTable
         dtListeClient.Columns.Add("idClient")
@@ -41,10 +38,12 @@
 
         dgvClient.DataSource = dtListeClient
 
+        'Permet d'améliorer le visuel lors de la sélection d'une ligne. L'entête ne change pas de couleur.
         dgvClient.ColumnHeadersDefaultCellStyle.SelectionBackColor = dgvClient.ColumnHeadersDefaultCellStyle.BackColor
 
     End Sub
 
+    'Cette procédure permet de créer les colonnes requises dans le DataGridView de films et de le remplir avec les données provenant des tables films, acteurs, catégories, etc.
     Private Sub RafraichirListeFilms()
         Dim dtListeFilm As New DataTable
         dtListeFilm.Columns.Add("nom")
@@ -65,32 +64,40 @@
         dgvFilms.DataSource = dtListeFilm
 
 
+        'Ajout des Tooltip permettant de voir les acteurs de chacun des films. Il est assingé sur chacune des cellules de la ligne du film.
         For i = 0 To dgvFilms.Rows.Count - 1
             For i2 = 0 To dgvFilms.Rows(i).Cells.Count - 1
                 dgvFilms.Rows(i).Cells(i2).ToolTipText = ObtenirActeursParIdFilm(dtFilm.Rows(i).Item("idFilm"))
             Next
         Next
 
+        'Permet d'améliorer le visuel lors de la sélection d'une ligne. L'entête ne change pas de couleur.
         dgvFilms.ColumnHeadersDefaultCellStyle.SelectionBackColor = dgvFilms.ColumnHeadersDefaultCellStyle.BackColor
 
     End Sub
 
+    'En cliquant sur le bouton Créer, la fenêtre principale du programme se ferme et celle de la gestion des clients s'affiche.
     Private Sub btnCreer_Click(sender As Object, e As EventArgs) Handles btnCreer.Click
+        'On attribue FAUX à l'indicateur de client sélectionné pour être en contexte de création.
         isClientSelectionne = False
         Me.Close()
         GestionClient.Show()
     End Sub
 
+    'En cliquant sur le bouton Modifier, la fenêtre principale du programe se ferme et celle de la gestion des clients s'affiche.
     Private Sub btnModifier_Click(sender As Object, e As EventArgs) Handles btnModifier.Click
+        'On attribue VRAI à l'indicateur de client sélectionné pour être en contexte de modification.
         isClientSelectionne = True
         clientSelectionneId = dtClient.Rows(dgvClient.CurrentCell.RowIndex).Item("idClient")
         Me.Close()
         GestionClient.Show()
     End Sub
 
+    'En cliquant sur le bouton Supprimer, on supprime la ligne correspondante au client sélectionné de la DataGridView et on appelle la fonction permettant de supprimer ce même client dans la BD.
     Private Sub btnSupprimer_Click(sender As Object, e As EventArgs) Handles btnSupprimer.Click
 
-        Dim result As DialogResult = MessageBox.Show("Souhaitez-vous vraiment supprimer cet utilisateur ?", "Video Gesstion", MessageBoxButtons.YesNo)
+        'Après un clic sur Supprimer, on demande à l'utilisateur de confirmer la suppression.
+        Dim result As DialogResult = MessageBox.Show("Souhaitez-vous vraiment supprimer cet utilisateur ?", "Video Gestion", MessageBoxButtons.YesNo)
         If result = DialogResult.Yes Then
             clientSelectionneId = dtClient.Rows(dgvClient.CurrentCell.RowIndex).Item("idClient")
 
@@ -104,6 +111,15 @@
 
     End Sub
 
+    'En cliquant sur le bouton Se déconnecter, on réinitialise le niveau d'accès, on ferme la fenêtre principale du programme et on affiche celle d'authentification.
+    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+        Dim login As New Login
+        niveauAccesComplet = False
+        login.Show()
+        Me.Hide()
+    End Sub
+
+    'En cliquant sur le bouton Quitter, l'application se ferme.
     Private Sub btnQuit_Click(sender As Object, e As EventArgs) Handles btnQuit.Click
         Application.Exit()
     End Sub

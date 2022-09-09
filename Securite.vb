@@ -2,12 +2,17 @@
 Imports System.Security.Cryptography
 Imports System.Text
 
-Module Securite
+Public Module Securite
 
+    'Classe définissant un utilisateur
     Public Class Utilisateur
         Public AuthentificationValide As Boolean
         Public typeAcces As String
+        Public Sub New()
+        End Sub
     End Class
+
+    'Fonction qui reçoit un mot de passe en clair et qui le retourne sous forme de chaîne de texte encryptée selon la clé d'encryption c43Mek0536k677V
     Public Function Encrypt(clearText As String) As String
         Dim EncryptionKey As String = "c43Mek0536k677V"
         Dim clearBytes As Byte() = Encoding.Unicode.GetBytes(clearText)
@@ -28,6 +33,7 @@ Module Securite
         Return clearText
     End Function
 
+    'Fonction qui reçoit une chaîne de texte encryptée selon la clé d'encryption c43Mek0536k677V et qui retourne le mot de passe en texte clair.
     Public Function Decrypt(cipherText As String) As String
         Dim EncryptionKey As String = "c43Mek0536k677V"
         Dim cipherBytes As Byte() = Convert.FromBase64String(cipherText)

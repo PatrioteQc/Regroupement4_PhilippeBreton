@@ -2,9 +2,11 @@
 Imports System.Net
 Imports System.Text.RegularExpressions
 
-Module Utile
+Public Module Utile
+    'Procédure permettant de simuler la présence d'une base de données.
     Sub CreationDonneesDepart()
         Try
+            'Création de quelques personnes dans la datatable dtPersonne
             dtPersonne.Columns.Add("id")
             dtPersonne.Columns.Add("nom")
             dtPersonne.Columns.Add("prenom")
@@ -75,6 +77,7 @@ Module Utile
             dtPersonne.Rows.Add(rowPersonne)
 
 
+            'Création de quelques clients dans la datatable dtClient
             dtClient.Columns.Add("idClient")
             dtClient.Columns.Add("idPersonne")
             dtClient.Columns.Add("dtInscr")
@@ -85,7 +88,7 @@ Module Utile
 
             rowClient("idClient") = 9
             rowClient("idPersonne") = 1
-            rowClient("dtInscr") = DateTime.Now()
+            rowClient("dtInscr") = DateTime.Parse("2022-09-01")
             rowClient("email") = "pauline.bouchard@email.com"
             rowClient("password") = Encrypt("10Lapins")
             dtClient.Rows.Add(rowClient)
@@ -99,6 +102,7 @@ Module Utile
             rowClient("password") = Encrypt("10Lapins")
             dtClient.Rows.Add(rowClient)
 
+            'Création de quelques acteurs dans la datatable dtActeur
             dtActeur.Columns.Add("idActeur")
             dtActeur.Columns.Add("idPersonne")
             dtActeur.Columns.Add("nomPersn")
@@ -146,6 +150,7 @@ Module Utile
             rowActeur("cacht") = 700000
             dtActeur.Rows.Add(rowActeur)
 
+            'Création de quelques employés dans la datatable dtEmploye
             dtEmploye.Columns.Add("idEmploye")
             dtEmploye.Columns.Add("idPersonne")
             dtEmploye.Columns.Add("dtEmbch")
@@ -173,6 +178,7 @@ Module Utile
             rowEmploye("typeAcces") = "W"
             dtEmploye.Rows.Add(rowEmploye)
 
+            'Création de quelques cartes de crédit dans la datatable dtCarteCredit, un client peut avoir plusieurs cartes de crédit grâce à la référence idClient
             dtCarteCredit.Columns.Add("idCarteCredit")
             dtCarteCredit.Columns.Add("idClient")
             dtCarteCredit.Columns.Add("numero")
@@ -206,6 +212,7 @@ Module Utile
             rowCarteCredit("codeSecrt") = 521
             dtCarteCredit.Rows.Add(rowCarteCredit)
 
+            'Création de quelques films dans la datatable dtFilm
             dtFilm.Columns.Add("idFilm")
             dtFilm.Columns.Add("nom")
             dtFilm.Columns.Add("duree")
@@ -243,6 +250,7 @@ Module Utile
             rowFilm("descr") = "L'histoire incroyable d'un homme faible d'esprit"
             dtFilm.Rows.Add(rowFilm)
 
+            'Création de quelques catégories de films dans la datatable dtCategorie
             dtCategorie.Columns.Add("idCategorie")
             dtCategorie.Columns.Add("nom")
             dtCategorie.Columns.Add("descr")
@@ -275,6 +283,7 @@ Module Utile
             rowCategorie("descr") = "Film qui dilate la rate"
             dtCategorie.Rows.Add(rowCategorie)
 
+            'Création de quelques relations entre les films et les acteurs dans la datatable dtFilmActeur
             dtFilmActeur.Columns.Add("idFilmsActeur")
             dtFilmActeur.Columns.Add("idFilm")
             dtFilmActeur.Columns.Add("idActeur")
@@ -321,6 +330,8 @@ Module Utile
             rowFilmActeur("idActeur") = 14
             dtFilmActeur.Rows.Add(rowFilmActeur)
 
+            'Création de quelques relations entre les films et les catégories de films dans la datatable dtFilmCategorie.
+            'Un film peut avoir plusieurs catégories.
             dtFilmCategorie.Columns.Add("idFilmCategorie")
             dtFilmCategorie.Columns.Add("idFilm")
             dtFilmCategorie.Columns.Add("idCategorie")
@@ -374,7 +385,7 @@ Module Utile
             rowFilmCategorie("idCategorie") = 27
             dtFilmCategorie.Rows.Add(rowFilmCategorie)
 
-
+            'Initialisation des ID pour simuler la base de données
             For i = 0 To 40
                 idList.Add(i)
             Next
@@ -385,6 +396,8 @@ Module Utile
         End Try
 
     End Sub
+
+    'Fonction permettant de simuler l'attribution automatique d'un id par la base de données. Le code appelle cette fonctiokn pour obtenir un id qui n'a jamais été utilisé.
     Function ObtenirId() As Integer
         Dim id As Integer
 
@@ -399,9 +412,11 @@ Module Utile
         Return id
     End Function
 
+    'Cette fonction reçoit un objet Client et le sauvegarde dans la base de donnée. La fonctionne retourne VRAI si la sauvegarde est réussie.
     Function CreerClientDB(ByVal newClient As Client) As Boolean
         Dim isSucces As Boolean = False
 
+        'Les propriétés de la classe Client et celles héritées de la classe Personne sont sauvegardées dans 2 tables différentes.
         Try
             Dim rowClient As DataRow = dtClient.NewRow
 
@@ -430,20 +445,24 @@ Module Utile
 
     End Function
 
+    'Cette fonction reçoit un objet Client et le met à jour dans la base de donnée. La fonctionne retourne VRAI si la mise à jour est réussie.
     Function MiseAJourClientDB(ByVal updatedClient As Client) As Boolean
         Dim isSucces As Boolean = False
 
+        'On recherche d'abord l'enregistrement dans la BD ayant le même ID client
         Try
             For i = 0 To dtClient.Rows.Count - 1
                 If dtClient.Rows(i).Item("idClient") = updatedClient.idClient Then
                     dtClient.Rows(i)("email") = updatedClient.email
                     dtClient.Rows(i)("password") = updatedClient.password
 
+                    'Ensuite, on recherche l'id Personne dans la BD pour mettre les propriétés de cette classe à jour.
                     For i2 = 0 To dtPersonne.Rows.Count - 1
                         If dtPersonne.Rows(i2).Item("id") = updatedClient.idPersonne Then
                             dtPersonne.Rows(i2)("nom") = updatedClient.nom
                             dtPersonne.Rows(i2)("prenom") = updatedClient.prenom
                             dtPersonne.Rows(i2)("sexe") = updatedClient.sexe
+                            isSucces = True
                         End If
                     Next
                 End If
@@ -454,25 +473,27 @@ Module Utile
 
         End Try
 
-        isSucces = True
-
         Return isSucces
 
     End Function
 
+    'Cette fonctionne reçcoit un id Client et supprime l'enregistrement correspondant dans la BD. Si la suppression est réussie, la fonction retourne VRAI.
     Function SupprimerClientDB(ByVal idClient As Integer) As Boolean
         Dim isSucces As Boolean = False
         Dim idPersonne As Integer
 
         Try
+            'On recherche l'id Client dans la BD, on récupère l'id Personne associé et on efface l'enregistrement.
             For i = 0 To dtClient.Rows.Count - 1
                 If dtClient.Rows(i).Item("idClient") = idClient Then
                     idPersonne = dtClient.Rows(i).Item("idPersonne")
                     dtClient.Rows(i).Delete()
 
+                    'On recherche l'id Personne correspondant et on supprime l'enregistrement.
                     For i2 = 0 To dtPersonne.Rows.Count - 1
                         If dtPersonne.Rows(i2).Item("id") = idPersonne Then
                             dtPersonne.Rows(i2).Delete()
+                            isSucces = True
                         End If
                     Next
                 End If
@@ -482,15 +503,15 @@ Module Utile
 
         End Try
 
-        isSucces = True
-
         Return isSucces
     End Function
 
+    'Cette fonction reçoit un nom d'utilisateur et un mot de passe et retourne un objet Utilisateur si l'authentification est valide.
     Function ValiderAuthentification(ByVal username As String, ByVal password As String) As Utilisateur
         Dim currentUser As New Utilisateur
         currentUser.AuthentificationValide = False
 
+        'Dans la BD' on recherche l'employé associé au nom d'utilisateur, on décrypte le mot de passe correspondant pour le comparer à celui reçu. Si c'est valide, on indique que l'authentification est valide et on ajoute le type d'accès assigné dans la BD la propriété de la classe prévue à cet effet.
         For i = 0 To dtEmploye.Rows.Count - 1
             If dtEmploye.Rows(i).Item("username") = username Then
                 If Decrypt(dtEmploye.Rows(i).Item("password")) = password Then
@@ -503,6 +524,7 @@ Module Utile
         Return currentUser
     End Function
 
+    'Fonctioner permettant de vérifier dans la BD si le courriel reçu en paramètre a déjà été utilisé.
     Function isCourrielExistant(ByVal email As String) As Boolean
         Dim courrielExistant As Boolean = False
 
@@ -515,6 +537,7 @@ Module Utile
         Return courrielExistant
     End Function
 
+    'Fonction permettant d'obtenir un objet Personne et toutes ses propriétés contenues dans la BD à partir de son ID.
     Function ObtenirPersonneParId(ByVal id As Integer) As Personne
         Dim personne As New Personne
 
@@ -531,11 +554,13 @@ Module Utile
 
     End Function
 
+    'Fonction permettant d'obtenir un objet Client et toutes ses propriétés contenues dans la BD à partir de son ID.
     Function ObtenirClientParId(ByVal idClient As Integer) As Client
         Dim client As New Client
         Dim personne As New Personne
 
 
+        'On recherche d'abord les propriétés Client contenues dans la table dtClient.
         For i = 0 To dtClient.Rows.Count - 1
             If dtClient.Rows(i).Item("idClient") = idClient Then
                 client.idClient = idClient
@@ -546,6 +571,7 @@ Module Utile
             End If
         Next
 
+        'On recherche ensuite les propriétés Personne associées à ce client dans la table dtPersonne.
         For i = 0 To dtPersonne.Rows.Count - 1
             If dtPersonne.Rows(i).Item("id") = client.idPersonne Then
                 client.id = dtPersonne.Rows(i).Item("id")
@@ -559,6 +585,7 @@ Module Utile
 
     End Function
 
+    'Fonction permettant d'obtenir le nom d'une catégorie sous forme de chaîne de texte à partir de son ID.
     Function ObtenirCategorieParId(ByVal idCategorie As Integer) As String
         Dim nomCategorie As String = ""
 
@@ -571,6 +598,7 @@ Module Utile
         Return nomCategorie
     End Function
 
+    'Cette fonction reçoit un ID de film et retourne toutes les catégories qui lui sont assignées dans la table FilmCategorie de la BD sous forme de chaîne de texte. Tous les noms de catégorie sont concaténées.
     Function ObtenirCategoriesParIdFilm(ByVal idFilm As Integer) As String
         Dim enumCategories As String = ""
 
@@ -580,11 +608,13 @@ Module Utile
             End If
         Next
 
+        'On utilise TRIM pour supprimer les virgules excédentaires.
         enumCategories = enumCategories.Trim(",")
 
         Return enumCategories
     End Function
 
+    'Cette fonction permet d'obtenir une chaîne de texte représentant le prénom, le nom et le personnage à partir d'un ID d'acteur. Exemple: Tom Hanks (Forrest Gump)
     Function ObtenirActeurParId(ByVal idActeur As Integer) As String
         Dim detailsActeur As String = ""
 
@@ -598,6 +628,7 @@ Module Utile
         Return detailsActeur
     End Function
 
+    'Cette fonction reçoit un ID de film et retourne une chaîne de texte représentant les détails de tous les acteurs qui y jouent incluant leur prénom, nom et personnage.
     Function ObtenirActeursParIdFilm(ByVal idFilm As Integer) As String
         Dim enumActeurs As String = ""
 
@@ -612,6 +643,7 @@ Module Utile
         Return enumActeurs
     End Function
 
+    'Fonction permettant de convertir un nombre de secondes en format texte de durée plus facile à lire dans l'interface. Exemple: 01:38:12
     Function FormaterNbSecondes(iSecond As Integer) As String
         Dim iSpan As TimeSpan = TimeSpan.FromSeconds(iSecond)
         Dim SecondesFormat As String
@@ -623,12 +655,14 @@ Module Utile
         Return SecondesFormat
     End Function
 
+    'Fonction permettant de valider si la chaîne de texte reçue est bien dans un format de courriel valide. Un REGEX est utilisé.
     Function IsEmail(ByVal email As String) As Boolean
         Static emailExpression As New Regex("^\w+[\w-\.]*\@\w+((-\w+)|(\w*))\.[a-z]{2,3}$")
 
         Return emailExpression.IsMatch(email)
     End Function
 
+    'Procédure permettant d'afficher une boîte de dialogue. Permet d'uniformiser l'appel et le visuel.
     Public Sub AfficherBoiteDialogue(ByVal message As String)
         MsgBox(message, , "Video Gestion")
     End Sub

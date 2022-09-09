@@ -1,4 +1,5 @@
-﻿Public Class Personne
+﻿'Classe définissant une personne
+Public Class Personne
     Public id As Integer
     Public nom As String
     Public prenom As String
@@ -8,6 +9,7 @@
     End Sub
 End Class
 
+'Classe définissant un client, les propriétés de la classe Personne sont héritées
 Public Class Client
     Inherits Personne
     Public idClient As Integer
@@ -21,6 +23,7 @@ Public Class Client
 
 End Class
 
+'Classe définissant un acteur, les propriétés de la classe Personne sont héritées
 Public Class Acteur
     Inherits Personne
     Public idActeur As Integer
@@ -35,6 +38,7 @@ Public Class Acteur
 
 End Class
 
+'Classe définissant un employé, les propriétés de la classe Personne sont héritées
 Public Class Employe
     Inherits Personne
     Public idEmploye As Integer
@@ -49,6 +53,7 @@ Public Class Employe
 
 End Class
 
+'Classe définissant une carte de crédit
 Public Class CarteCredit
     Public id As Integer
     Public no As String
