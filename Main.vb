@@ -2,18 +2,23 @@
 
     'Au chargement de la fenêtre principale du programme, on rafraichit la liste des clients et la liste des films affichés.
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles Me.Load
-        RafraichirListeClient()
-        RafraichirListeFilms()
-        'Si le niveau d'accès de l'utilisateur permet la modification, les boutons permettant d'éditer les données sont affichés. Si l'utilisateur est en lecture seule, ces boutons sont masqués.
-        If niveauAccesComplet Then
-            btnCreer.Visible = True
-            btnModifier.Visible = True
-            btnSupprimer.Visible = True
-        Else
-            btnCreer.Visible = False
-            btnModifier.Visible = False
-            btnSupprimer.Visible = False
-        End If
+        Try
+            RafraichirListeClient()
+            RafraichirListeFilms()
+            'Si le niveau d'accès de l'utilisateur permet la modification, les boutons permettant d'éditer les données sont affichés. Si l'utilisateur est en lecture seule, ces boutons sont masqués.
+            If niveauAccesComplet Then
+                btnCreer.Visible = True
+                btnModifier.Visible = True
+                btnSupprimer.Visible = True
+            Else
+                btnCreer.Visible = False
+                btnModifier.Visible = False
+                btnSupprimer.Visible = False
+            End If
+
+        Catch ex As Exception
+            GestionErreurStandard(ex)
+        End Try
     End Sub
 
     'Cette procédure permet de créer les colonnes requises dans le DataGridView de clients et de le remplir avec les données provenant des tables clients et personnes.
@@ -40,7 +45,6 @@
 
         'Permet d'améliorer le visuel lors de la sélection d'une ligne. L'entête ne change pas de couleur.
         dgvClient.ColumnHeadersDefaultCellStyle.SelectionBackColor = dgvClient.ColumnHeadersDefaultCellStyle.BackColor
-
     End Sub
 
     'Cette procédure permet de créer les colonnes requises dans le DataGridView de films et de le remplir avec les données provenant des tables films, acteurs, catégories, etc.
@@ -79,36 +83,47 @@
     'En cliquant sur le bouton Créer, la fenêtre principale du programme se ferme et celle de la gestion des clients s'affiche.
     Private Sub btnCreer_Click(sender As Object, e As EventArgs) Handles btnCreer.Click
         'On attribue FAUX à l'indicateur de client sélectionné pour être en contexte de création.
-        isClientSelectionne = False
-        Me.Close()
-        GestionClient.Show()
+        Try
+            isClientSelectionne = False
+            Me.Close()
+            GestionClient.Show()
+        Catch ex As Exception
+            GestionErreurStandard(ex)
+        End Try
     End Sub
 
     'En cliquant sur le bouton Modifier, la fenêtre principale du programe se ferme et celle de la gestion des clients s'affiche.
     Private Sub btnModifier_Click(sender As Object, e As EventArgs) Handles btnModifier.Click
         'On attribue VRAI à l'indicateur de client sélectionné pour être en contexte de modification.
-        isClientSelectionne = True
-        clientSelectionneId = dtClient.Rows(dgvClient.CurrentCell.RowIndex).Item("idClient")
-        Me.Close()
-        GestionClient.Show()
+        Try
+            isClientSelectionne = True
+            clientSelectionneId = dtClient.Rows(dgvClient.CurrentCell.RowIndex).Item("idClient")
+            Me.Close()
+            GestionClient.Show()
+        Catch ex As Exception
+            GestionErreurStandard(ex)
+        End Try
+
     End Sub
 
     'En cliquant sur le bouton Supprimer, on supprime la ligne correspondante au client sélectionné de la DataGridView et on appelle la fonction permettant de supprimer ce même client dans la BD.
     Private Sub btnSupprimer_Click(sender As Object, e As EventArgs) Handles btnSupprimer.Click
+        Try
+            'Après un clic sur Supprimer, on demande à l'utilisateur de confirmer la suppression.
+            Dim result As DialogResult = MessageBox.Show("Souhaitez-vous vraiment supprimer cet utilisateur ?", "Video Gestion", MessageBoxButtons.YesNo)
+            If result = DialogResult.Yes Then
+                clientSelectionneId = dtClient.Rows(dgvClient.CurrentCell.RowIndex).Item("idClient")
 
-        'Après un clic sur Supprimer, on demande à l'utilisateur de confirmer la suppression.
-        Dim result As DialogResult = MessageBox.Show("Souhaitez-vous vraiment supprimer cet utilisateur ?", "Video Gestion", MessageBoxButtons.YesNo)
-        If result = DialogResult.Yes Then
-            clientSelectionneId = dtClient.Rows(dgvClient.CurrentCell.RowIndex).Item("idClient")
-
-            If SupprimerClientDB(clientSelectionneId) Then
-                dgvClient.Rows.RemoveAt(dgvClient.CurrentCell.RowIndex)
-                AfficherBoiteDialogue("Suppresion du client complétée")
-            Else
-                AfficherBoiteDialogue("Suppresion impossible")
+                If SupprimerClientDB(clientSelectionneId) Then
+                    dgvClient.Rows.RemoveAt(dgvClient.CurrentCell.RowIndex)
+                    AfficherBoiteDialogue("Suppresion du client complétée")
+                Else
+                    AfficherBoiteDialogue("Suppresion impossible")
+                End If
             End If
-        End If
-
+        Catch ex As Exception
+            GestionErreurStandard(ex)
+        End Try
     End Sub
 
     'En cliquant sur le bouton Se déconnecter, on réinitialise le niveau d'accès, on ferme la fenêtre principale du programme et on affiche celle d'authentification.
