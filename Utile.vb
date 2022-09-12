@@ -477,8 +477,10 @@ Public Module Utile
                     If dtPersonne.Rows(i2).Item("id") = idPersonne Then
                         dtPersonne.Rows(i2).Delete()
                         isSucces = True
+                        Exit For
                     End If
                 Next
+                Exit For
             End If
         Next
 

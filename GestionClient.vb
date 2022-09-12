@@ -26,7 +26,7 @@ Public Class GestionClient
     'Si des données ne sont pas conformes, un message d'erreur est affiché et indique les champs qui ne sont pas valides.
     Function FormulaireValide() As Boolean
         Dim isFormulaireValide As Boolean = True
-        Dim messageErreur As String = "Les données saisies contiennent ne sont pas conformes: "
+        Dim messageErreur As String = "Les données saisies ne sont pas conformes: "
 
         'Validation du format du courriel
         If Not IsEmail(txtUserName.Text) Then
@@ -64,7 +64,7 @@ Public Class GestionClient
         End If
 
         If Not isFormulaireValide Then
-            MsgBox(messageErreur)
+            AfficherBoiteDialogue(messageErreur)
         End If
 
         Return isFormulaireValide
@@ -85,8 +85,8 @@ Public Class GestionClient
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Try
             If FormulaireValide() Then
-                'Si le courriel n'est pas déjà utilisé dans la BD, on poursuit, sinon on indique à l'utilisateur qu'il est déjà existant.
-                If Not isCourrielExistant(txtUserName.Text) Then
+                'Si le courriel n'est pas déjà utilisé dans la BD, ou qu'il correspond à celui déjà utilisé pour le client sélectionné on poursuit, sinon on indique à l'utilisateur qu'il est déjà existant.
+                If Not isCourrielExistant(txtUserName.Text) Or txtUserName.Text = ObtenirClientParId(clientSelectionneId).email Then
                     'Si on est contexte de création de client, on obtient de nouveaux IDs, on assigne les propriétés de l'objet Client en fonction des informations entrées dans le formulaire.
                     If Not isClientSelectionne Then
                         Dim newClient As New Client()

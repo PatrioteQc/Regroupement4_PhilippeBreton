@@ -2,7 +2,10 @@
     'Au chargement de la fenêtre d'authentification, on exécute la procédure permettant de simuler la présence d'une base de données.
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles Me.Load
         Try
-            CreationDonneesDepart()
+            If idList.Count = 0 Then
+                CreationDonneesDepart()
+            End If
+
         Catch ex As Exception
             GestionErreurStandard(ex)
         End Try
