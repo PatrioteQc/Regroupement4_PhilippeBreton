@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Regroupement4_PhilippeBreton", "Regroupement4_PhilippeBreton.vbproj", "{EF67A36D-2AC3-4711-A842-0BF263B66B2C}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestUnitaire", "..\TestUnitaire\TestUnitaire.vbproj", "{B56380B3-969E-4D5C-9382-206BC135CA47}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "TestUnitaire", "..\TestUnitaire\TestUnitaire.vbproj", "{B56380B3-969E-4D5C-9382-206BC135CA47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

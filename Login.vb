@@ -3,7 +3,7 @@
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles Me.Load
         Try
             If idList.Count = 0 Then
-                CreationDonneesDepart()
+                ObtentionDonneesDepart()
             End If
 
         Catch ex As Exception
@@ -47,5 +47,9 @@
     'En cliquant sur le bouton Quitter, l'application se ferme.
     Private Sub btnQuitter_Click(sender As Object, e As EventArgs) Handles btnQuitter.Click
         Application.Exit()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        'MySQLDB.ObtenirTable()
     End Sub
 End Class
