@@ -6,6 +6,9 @@
                 ObtentionDonneesDepart()
             End If
 
+            txtUserName.Text = "RMAROIS"
+            txtpassword.Text = "20Lapins"
+
         Catch ex As Exception
             GestionErreurStandard(ex)
         End Try
@@ -49,7 +52,4 @@
         Application.Exit()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        'MySQLDB.ObtenirTable()
-    End Sub
 End Class

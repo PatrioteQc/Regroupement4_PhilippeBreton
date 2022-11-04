@@ -3,6 +3,7 @@
     'Au chargement de la fenêtre principale du programme, on rafraichit la liste des clients et la liste des films affichés.
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles Me.Load
         Try
+            ObtentionDonneesDepart()
             RafraichirListeClient()
             RafraichirListeFilms()
             'Si le niveau d'accès de l'utilisateur permet la modification, les boutons permettant d'éditer les données sont affichés. Si l'utilisateur est en lecture seule, ces boutons sont masqués.
@@ -114,7 +115,7 @@
             If result = DialogResult.Yes Then
                 clientSelectionneId = dtClient.Rows(dgvClient.CurrentCell.RowIndex).Item("idClient")
 
-                If SupprimerClientDB(clientSelectionneId) Then
+                If SupprimerClientBD(clientSelectionneId) Then
                     dgvClient.Rows.RemoveAt(dgvClient.CurrentCell.RowIndex)
                     AfficherBoiteDialogue("Suppresion du client complétée")
                 Else

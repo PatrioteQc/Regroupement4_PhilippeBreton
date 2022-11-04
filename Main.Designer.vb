@@ -43,10 +43,10 @@ Partial Class Main
         '
         'btnLogout
         '
-        Me.btnLogout.Location = New System.Drawing.Point(1902, 623)
-        Me.btnLogout.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnLogout.Location = New System.Drawing.Point(1024, 292)
+        Me.btnLogout.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnLogout.Name = "btnLogout"
-        Me.btnLogout.Size = New System.Drawing.Size(193, 43)
+        Me.btnLogout.Size = New System.Drawing.Size(104, 20)
         Me.btnLogout.TabIndex = 0
         Me.btnLogout.Text = "Se déconnecter"
         Me.btnLogout.UseVisualStyleBackColor = True
@@ -59,8 +59,8 @@ Partial Class Main
         Me.dgvClient.AllowUserToResizeRows = False
         Me.dgvClient.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvClient.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.dgvClientPrenom, Me.dgvClientNom, Me.dgvClientCourriel})
-        Me.dgvClient.Location = New System.Drawing.Point(15, 68)
-        Me.dgvClient.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.dgvClient.Location = New System.Drawing.Point(8, 32)
+        Me.dgvClient.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.dgvClient.MultiSelect = False
         Me.dgvClient.Name = "dgvClient"
         Me.dgvClient.ReadOnly = True
@@ -70,7 +70,7 @@ Partial Class Main
         Me.dgvClient.RowTemplate.Height = 33
         Me.dgvClient.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.dgvClient.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvClient.Size = New System.Drawing.Size(1122, 489)
+        Me.dgvClient.Size = New System.Drawing.Size(604, 229)
         Me.dgvClient.TabIndex = 1
         '
         'dgvClientPrenom
@@ -109,39 +109,39 @@ Partial Class Main
         'lbListeClient
         '
         Me.lbListeClient.AutoSize = True
-        Me.lbListeClient.Location = New System.Drawing.Point(15, 19)
-        Me.lbListeClient.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbListeClient.Location = New System.Drawing.Point(8, 9)
+        Me.lbListeClient.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lbListeClient.Name = "lbListeClient"
-        Me.lbListeClient.Size = New System.Drawing.Size(181, 32)
+        Me.lbListeClient.Size = New System.Drawing.Size(89, 15)
         Me.lbListeClient.TabIndex = 2
         Me.lbListeClient.Text = "Liste des clients"
         '
         'btnCreer
         '
-        Me.btnCreer.Location = New System.Drawing.Point(15, 572)
-        Me.btnCreer.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnCreer.Location = New System.Drawing.Point(8, 268)
+        Me.btnCreer.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnCreer.Name = "btnCreer"
-        Me.btnCreer.Size = New System.Drawing.Size(193, 94)
+        Me.btnCreer.Size = New System.Drawing.Size(104, 44)
         Me.btnCreer.TabIndex = 3
         Me.btnCreer.Text = "Créer"
         Me.btnCreer.UseVisualStyleBackColor = True
         '
         'btnModifier
         '
-        Me.btnModifier.Location = New System.Drawing.Point(215, 572)
-        Me.btnModifier.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnModifier.Location = New System.Drawing.Point(116, 268)
+        Me.btnModifier.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnModifier.Name = "btnModifier"
-        Me.btnModifier.Size = New System.Drawing.Size(193, 94)
+        Me.btnModifier.Size = New System.Drawing.Size(104, 44)
         Me.btnModifier.TabIndex = 4
         Me.btnModifier.Text = "Modifier"
         Me.btnModifier.UseVisualStyleBackColor = True
         '
         'btnSupprimer
         '
-        Me.btnSupprimer.Location = New System.Drawing.Point(416, 572)
-        Me.btnSupprimer.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnSupprimer.Location = New System.Drawing.Point(224, 268)
+        Me.btnSupprimer.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnSupprimer.Name = "btnSupprimer"
-        Me.btnSupprimer.Size = New System.Drawing.Size(193, 94)
+        Me.btnSupprimer.Size = New System.Drawing.Size(104, 44)
         Me.btnSupprimer.TabIndex = 5
         Me.btnSupprimer.Text = "Supprimer"
         Me.btnSupprimer.UseVisualStyleBackColor = True
@@ -154,8 +154,8 @@ Partial Class Main
         Me.dgvFilms.AllowUserToResizeRows = False
         Me.dgvFilms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvFilms.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3})
-        Me.dgvFilms.Location = New System.Drawing.Point(1174, 68)
-        Me.dgvFilms.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.dgvFilms.Location = New System.Drawing.Point(632, 32)
+        Me.dgvFilms.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.dgvFilms.MultiSelect = False
         Me.dgvFilms.Name = "dgvFilms"
         Me.dgvFilms.ReadOnly = True
@@ -165,7 +165,7 @@ Partial Class Main
         Me.dgvFilms.RowTemplate.Height = 33
         Me.dgvFilms.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.dgvFilms.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvFilms.Size = New System.Drawing.Size(1122, 489)
+        Me.dgvFilms.Size = New System.Drawing.Size(604, 229)
         Me.dgvFilms.TabIndex = 6
         '
         'DataGridViewTextBoxColumn1
@@ -204,28 +204,28 @@ Partial Class Main
         'lblListeFilms
         '
         Me.lblListeFilms.AutoSize = True
-        Me.lblListeFilms.Location = New System.Drawing.Point(1174, 19)
-        Me.lblListeFilms.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblListeFilms.Location = New System.Drawing.Point(632, 9)
+        Me.lblListeFilms.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblListeFilms.Name = "lblListeFilms"
-        Me.lblListeFilms.Size = New System.Drawing.Size(164, 32)
+        Me.lblListeFilms.Size = New System.Drawing.Size(81, 15)
         Me.lblListeFilms.TabIndex = 7
         Me.lblListeFilms.Text = "Liste des films"
         '
         'btnQuit
         '
-        Me.btnQuit.Location = New System.Drawing.Point(2102, 623)
-        Me.btnQuit.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnQuit.Location = New System.Drawing.Point(1132, 292)
+        Me.btnQuit.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnQuit.Name = "btnQuit"
-        Me.btnQuit.Size = New System.Drawing.Size(193, 43)
+        Me.btnQuit.Size = New System.Drawing.Size(104, 20)
         Me.btnQuit.TabIndex = 8
         Me.btnQuit.Text = "Quitter"
         Me.btnQuit.UseVisualStyleBackColor = True
         '
         'Main
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 32.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(2316, 689)
+        Me.ClientSize = New System.Drawing.Size(1248, 323)
         Me.Controls.Add(Me.btnQuit)
         Me.Controls.Add(Me.lblListeFilms)
         Me.Controls.Add(Me.dgvFilms)
@@ -236,7 +236,7 @@ Partial Class Main
         Me.Controls.Add(Me.dgvClient)
         Me.Controls.Add(Me.btnLogout)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Main"

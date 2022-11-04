@@ -90,8 +90,8 @@ Public Class GestionClient
                     'Si on est contexte de création de client, on obtient de nouveaux IDs, on assigne les propriétés de l'objet Client en fonction des informations entrées dans le formulaire.
                     If Not isClientSelectionne Then
                         Dim newClient As New Client()
-                        newClient.id = ObtenirId()
-                        newClient.idClient = ObtenirId()
+                        'newClient.id = ObtenirId()
+                        'newClient.idClient = ObtenirId()
                         newClient.nom = txtNom.Text
                         newClient.prenom = txtPrenom.Text
                         newClient.sexe = dropSexe.SelectedItem.ToString
@@ -100,10 +100,10 @@ Public Class GestionClient
                         newClient.password = Encrypt(txtpassword.Text)
                         'Date d'inscription avec la date et l'heure actuelle
                         newClient.dtInscr = DateTime.Now()
-                        newClient.idPersonne = newClient.id
+                        'newClient.idPersonne = newClient.id
 
                         'Si la sauvegarde du client créé est réussie, on l'indique à l'utilisateur, on réinitialise les champs et on retourne à la fenêtre principale du programme.
-                        If CreerClientDB(newClient) Then
+                        If CreerClientBD(newClient) Then
                             AfficherBoiteDialogue("Création du client complétée")
                             txtNom.Text = ""
                             txtPrenom.Text = ""
@@ -125,7 +125,7 @@ Public Class GestionClient
                         updatedClient.password = Encrypt(txtpassword.Text)
 
                         'Si la sauvegarde du client modifié est réussie, on l'indique à l'utilisateur, on réinitialise les champs et on retourne à la fenêtre principale du programme.
-                        If MiseAJourClientDB(updatedClient) Then
+                        If MiseAJourClientBD(updatedClient) Then
                             AfficherBoiteDialogue("Mise à jour du client complétée")
                             Me.Close()
                             Main.Show()

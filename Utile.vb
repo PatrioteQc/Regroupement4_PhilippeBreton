@@ -16,106 +16,13 @@ Public Module Utile
         dtFilmCategorie = MySQLDB.ObtenirTable("FilmCategorie")
     End Sub
 
-    'Fonction permettant de simuler l'attribution automatique d'un id par la base de données. Le code appelle cette fonctiokn pour obtenir un id qui n'a jamais été utilisé.
-    Function ObtenirId() As Integer
-        Dim id As Integer
-
-        If idList.Count > 0 Then
-            id = idList(idList.Count - 1) + 1
-        Else
-            id = 0
-        End If
-
-        idList.Add(id)
-
-        Return id
-    End Function
-
-    'Cette fonction reçoit un objet Client et le sauvegarde dans la base de donnée. La fonctionne retourne VRAI si la sauvegarde est réussie.
-    Function CreerClientDB(ByVal newClient As Client) As Boolean
-        Dim isSucces As Boolean = False
-
-        'Les propriétés de la classe Client et celles héritées de la classe Personne sont sauvegardées dans 2 tables différentes.
-        Dim rowClient As DataRow = dtClient.NewRow
-
-        rowClient("idClient") = newClient.idClient
-        rowClient("idPersonne") = newClient.idPersonne
-        rowClient("dtInscr") = newClient.dtInscr
-        rowClient("email") = newClient.email
-        rowClient("password") = newClient.password
-        dtClient.Rows.Add(rowClient)
-
-        Dim rowPersonne As DataRow = dtPersonne.NewRow
-
-        rowPersonne("id") = newClient.id
-        rowPersonne("nom") = newClient.nom
-        rowPersonne("prenom") = newClient.prenom
-        rowPersonne("sexe") = newClient.sexe
-        dtPersonne.Rows.Add(rowPersonne)
-
-        isSucces = True
-
-        Return isSucces
-
-    End Function
-
-    'Cette fonction reçoit un objet Client et le met à jour dans la base de donnée. La fonctionne retourne VRAI si la mise à jour est réussie.
-    Function MiseAJourClientDB(ByVal updatedClient As Client) As Boolean
-        Dim isSucces As Boolean = False
-
-        'On recherche d'abord l'enregistrement dans la BD ayant le même ID client
-        For i = 0 To dtClient.Rows.Count - 1
-            If dtClient.Rows(i).Item("idClient") = updatedClient.idClient Then
-                dtClient.Rows(i)("email") = updatedClient.email
-                dtClient.Rows(i)("password") = updatedClient.password
-
-                'Ensuite, on recherche l'id Personne dans la BD pour mettre les propriétés de cette classe à jour.
-                For i2 = 0 To dtPersonne.Rows.Count - 1
-                    If dtPersonne.Rows(i2).Item("id") = updatedClient.idPersonne Then
-                        dtPersonne.Rows(i2)("nom") = updatedClient.nom
-                        dtPersonne.Rows(i2)("prenom") = updatedClient.prenom
-                        dtPersonne.Rows(i2)("sexe") = updatedClient.sexe
-                        isSucces = True
-                    End If
-                Next
-            End If
-
-        Next
-
-        Return isSucces
-
-    End Function
-
-    'Cette fonctionne reçcoit un id Client et supprime l'enregistrement correspondant dans la BD. Si la suppression est réussie, la fonction retourne VRAI.
-    Function SupprimerClientDB(ByVal idClient As Integer) As Boolean
-        Dim isSucces As Boolean = False
-        Dim idPersonne As Integer
-
-        'On recherche l'id Client dans la BD, on récupère l'id Personne associé et on efface l'enregistrement.
-        For i = 0 To dtClient.Rows.Count - 1
-            If dtClient.Rows(i).Item("idClient") = idClient Then
-                idPersonne = dtClient.Rows(i).Item("idPersonne")
-                dtClient.Rows(i).Delete()
-
-                'On recherche l'id Personne correspondant et on supprime l'enregistrement.
-                For i2 = 0 To dtPersonne.Rows.Count - 1
-                    If dtPersonne.Rows(i2).Item("id") = idPersonne Then
-                        dtPersonne.Rows(i2).Delete()
-                        isSucces = True
-                        Exit For
-                    End If
-                Next
-                Exit For
-            End If
-        Next
-
-        Return isSucces
-    End Function
-
     'Cette fonction reçoit un nom d'utilisateur et un mot de passe et retourne un objet Utilisateur si l'authentification est valide.
     Function ValiderAuthentification(ByVal username As String, ByVal password As String) As Utilisateur
         Dim currentUser As New Utilisateur
         currentUser.AuthentificationValide = False
+
+        'On rafraichit les données de base pour s'assurer de prendre en compte les changements depuis le dernier chargement.
+        ObtentionDonneesDepart()
 
         'Dans la BD' on recherche l'employé associé au nom d'utilisateur, on décrypte le mot de passe correspondant pour le comparer à celui reçu. Si c'est valide, on indique que l'authentification est valide et on ajoute le type d'accès assigné dans la BD la propriété de la classe prévue à cet effet.
         For i = 0 To dtEmploye.Rows.Count - 1
@@ -132,6 +39,10 @@ Public Module Utile
 
     'Fonctioner permettant de vérifier dans la BD si le courriel reçu en paramètre a déjà été utilisé.
     Function isCourrielExistant(ByVal email As String) As Boolean
+
+        'On rafraichit les données de base pour s'assurer de prendre en compte les changements depuis le dernier chargement.
+        ObtentionDonneesDepart()
+
         Dim courrielExistant As Boolean = False
 
         For i = 0 To dtClient.Rows.Count - 1
